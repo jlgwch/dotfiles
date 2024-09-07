@@ -1,0 +1,6 @@
+window.applauncher {
+    background-color: @theme_bg_color;
+    color: @theme_fg_color;
+    border-radius: 15px;
+    opacity: 0.9;
+}
