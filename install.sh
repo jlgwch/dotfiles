@@ -20,3 +20,7 @@ ln -s ${current_dir}/config/alacritty ~/.config/alacritty
 # tmux conf
 mv ~/.tmux.conf ${backups_dir}
 ln -s ${current_dir}/tmux.conf ~/.tmux.conf
+
+# fcitx5
+mkdir -p ~/.local/share/fcitx5/themes
+cp -r ${current_dir}/local/share/fcitx5/themes/* ~/.local/share/fcitx5/themes
