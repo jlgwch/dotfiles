@@ -34,6 +34,15 @@ sudo systemctl enable nvidia-resume.service
 
 4. Reboot.
 
+# environment
+- system: archlinux
+- cpu: r7 5800h
+- gpu: rtx 3060
+- gpu driver: nvidia-dkms
+- gpu connection method: Dedicated GPU direct connection.
+- desktop: hyprland
+
+
 # references
 1. https://github.com/wxqwinner/xdots/blob/master/docs/nvidia_suspend_fixes.md
 2. https://gist.github.com/jstarcher/abdac9c2c0b5de8b073d527870b73a19
