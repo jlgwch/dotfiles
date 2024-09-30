@@ -2,7 +2,7 @@ window.bar {
     background-color: @theme_bg_color;
     color: @theme_fg_color;
     border-radius: 20px;
-    opacity: 0.9;
+    opacity: 1;
 }
 
 .workspaces button {
@@ -35,16 +35,33 @@ window.bar {
     color: @theme_selected_bg_color;
 }
 
+.date {
+    border: none;
+}
+
 .notification {
-    color: yellow;
+    /* color: yellow; */
+    color: black;
 }
 
 .caffeine {
     border-radius: 100%;
+    border: none;
+    color: #000000;
+}
+
+.battery {
+    /* border-radius: 100%; */
+    border: none;
+    color: #000000;
+    border-top-right-radius: 100%;
+    border-bottom-right-radius: 100%;
 }
 
 .systray button {
     border-radius: 100%;
+    border: none;
+    background-color: @theme_bg_color;
 }
 
 levelbar block,

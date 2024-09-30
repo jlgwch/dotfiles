@@ -11,6 +11,8 @@ import { ClientTitle } from "./clienttitle.js"
 import { SysTray } from "./systray.js"
 import { Volume } from "./volume.js"
 import { Caffeine } from "./caffeine.js"
+import { Battery } from "./battery.js"
+import { NetworkIndicator } from "./networkindicator/networkindicator.js"
 
 // widgets can be only assigned as a child in one container
 // so to make a reuseable widget, make it a function
@@ -106,7 +108,9 @@ function Right() {
             // BatteryLabel(),
             // Clock(),
             SysTray(),
-            Caffeine()
+            Caffeine(),
+            NetworkIndicator(),
+            Battery()
         ],
     })
 }
