@@ -24,3 +24,7 @@ ln -s ${current_dir}/tmux.conf ~/.tmux.conf
 # fcitx5
 mkdir -p ~/.local/share/fcitx5/themes
 cp -r ${current_dir}/local/share/fcitx5/themes/* ~/.local/share/fcitx5/themes
+
+# ~/.bashrc
+mv ~/.bashrc ${backups_dir}
+cp bashrc ~/.bashrc
