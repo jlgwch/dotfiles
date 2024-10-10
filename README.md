@@ -1,2 +1,2 @@
 # dotfiles
-My dotfiles for arch linux with hyprlan and ags.
+My dotfiles for arch linux with hyprland and ags.
