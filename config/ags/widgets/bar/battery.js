@@ -27,6 +27,7 @@ export function Battery() {
 
     return Widget.Box({
         visible: battery.bind("available"),
+        spacing: 2,
         children: [
             Widget.Icon({ icon }),
             Widget.Label( {label:value} ),

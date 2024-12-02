@@ -12,6 +12,6 @@ export function SysTray() {
     return Widget.Box({
         class_name: "systray",
         children: items,
-        spacing: 3,
+        spacing: 8,
     })
 }

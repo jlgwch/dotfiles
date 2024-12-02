@@ -1,5 +1,6 @@
 import { Bar } from "./widgets/bar/bar.js"
 import { applauncher } from "./widgets/applauncher/applauncher.js"
+import { panel } from "./widgets/panel/panel.js"
 import * as Generic from './utils/utils.js'
 
 const { Gdk, Gtk } = imports.gi
@@ -9,11 +10,10 @@ App.config({
     style: "./styles/style.css",
     windows: [
         Bar(Generic.getMonitorIDByName("eDP-1")),
-        applauncher
+        applauncher,
+        panel
         // you can call it, for each monitor
         // Bar(0),
         // Bar(1)
     ],
 })
-
-export { }

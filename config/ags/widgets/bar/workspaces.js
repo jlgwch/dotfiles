@@ -13,6 +13,7 @@ export function Workspaces() {
         })))
 
     return Widget.Box({
+        spacing: 3,
         class_name: "workspaces",
         children: workspaces,
     })

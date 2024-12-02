@@ -13,6 +13,7 @@ import { Volume } from "./volume.js"
 import { Caffeine } from "./caffeine.js"
 import { Battery } from "./battery.js"
 import { Micophone } from "./microphone.js"
+import { panel } from "../panel/panel.js"
 import { NetworkIndicator } from "./networkindicator/networkindicator.js"
 
 // widgets can be only assigned as a child in one container
@@ -85,7 +86,9 @@ function Indicator() {
         vertical: false,
         children: [
             // widgets
+            NetworkIndicator(),
             Micophone(),
+            Volume(),
             Battery(),
         ]
     })
@@ -94,7 +97,7 @@ function Indicator() {
         class_name: "indicator",
         child: indicator,
         onClicked: () => {
-            
+            App.toggleWindow('panel')
         },
     });
 }
@@ -131,7 +134,6 @@ function Right() {
             // Clock(),
             SysTray(),
             Caffeine(),
-            NetworkIndicator(),
             Indicator(),
         ],
     })

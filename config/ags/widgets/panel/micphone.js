@@ -1,6 +1,6 @@
 const audio = await Service.import("audio")
 
-export function Micophone() {
+export function Micphone() {
     const icons = {
         100: "micphone_100",
         90: "micphone_90",
@@ -23,13 +23,22 @@ export function Micophone() {
         return `${icons[icon]}`
     }
 
+    const slider = Widget.Slider({
+        hexpand: true,
+        draw_value: false,
+        on_change: ({ value }) => audio.microphone.volume = value,
+        setup: self => self.hook(audio.microphone, () => {
+            self.value = audio.microphone.volume || 0
+        }),
+    })
+
     const icon = Widget.Icon({
         icon: Utils.watch(getIcon(), audio.microphone, getIcon),
     })
 
     return Widget.Box({
         class_name: "volume",
-        // css: "min-width: 180px",
-        children: [icon],
+        css: "min-width: 180px",
+        children: [icon, slider],
     })
 }
