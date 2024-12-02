@@ -28,3 +28,7 @@ cp -r ${current_dir}/local/share/fcitx5/themes/* ~/.local/share/fcitx5/themes
 # ~/.bashrc
 mv ~/.bashrc ${backups_dir}
 cp bashrc ~/.bashrc
+
+# gtk
+cp -r ${current_dir}/config/gtk-3.0 ~/.config/gtk-3.0
+cp ${current_dir}/gtkrc-2.0 ~/.gtkrc-2.0
