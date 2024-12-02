@@ -25,15 +25,11 @@ export function Battery() {
     const value = battery.bind("percent").as(p => p > 0 ? `${p}%` : "0%")
     const icon = battery.bind("percent").as(p => `battery-level-${Math.floor(p / 10) * 10}-symbolic`)
 
-    return Widget.Button({
-        class_name: "battery",
-        sensitive: false,   // 禁用
-        child: Widget.Box({
-            visible: battery.bind("available"),
-            children: [
-                Widget.Icon({ icon }),
-                Widget.Label( {label:value} ),
-            ],
-        })
+    return Widget.Box({
+        visible: battery.bind("available"),
+        children: [
+            Widget.Icon({ icon }),
+            Widget.Label( {label:value} ),
+        ],
     })
 }

@@ -50,18 +50,14 @@ window.bar {
     color: #000000;
 }
 
-.battery {
-    /* border-radius: 100%; */
-    border: none;
-    color: #000000;
-    border-top-right-radius: 100%;
-    border-bottom-right-radius: 100%;
-}
-
 .systray button {
     border-radius: 100%;
     /* border: none; */
     background-color: @theme_bg_color;
+}
+
+.indicator {
+    border-radius: 30px;
 }
 
 levelbar block,

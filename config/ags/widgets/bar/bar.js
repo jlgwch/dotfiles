@@ -12,6 +12,7 @@ import { SysTray } from "./systray.js"
 import { Volume } from "./volume.js"
 import { Caffeine } from "./caffeine.js"
 import { Battery } from "./battery.js"
+import { Micophone } from "./microphone.js"
 import { NetworkIndicator } from "./networkindicator/networkindicator.js"
 
 // widgets can be only assigned as a child in one container
@@ -77,10 +78,31 @@ function BatteryLabel() {
     })
 }
 
+function Indicator() {
+    const indicator = Widget.Box({
+        spacing: 8,
+        homogeneous: false,
+        vertical: false,
+        children: [
+            // widgets
+            Micophone(),
+            Battery(),
+        ]
+    })
+
+    return Widget.Button({
+        class_name: "indicator",
+        child: indicator,
+        onClicked: () => {
+            
+        },
+    });
+}
+
 // layout of the bar
 function Left() {
     return Widget.Box({
-        spacing: 5,
+        spacing: 8,
         children: [
             Workspaces(),
             ClientTitle(),
@@ -90,7 +112,7 @@ function Left() {
 
 function Center() {
     return Widget.Box({
-        spacing: 5,
+        spacing: 8,
         children: [
             Clock(),
             // Media(),
@@ -102,7 +124,7 @@ function Center() {
 function Right() {
     return Widget.Box({
         hpack: "end",
-        spacing: 5,
+        spacing: 8,
         children: [
             // Volume(),
             // BatteryLabel(),
@@ -110,7 +132,7 @@ function Right() {
             SysTray(),
             Caffeine(),
             NetworkIndicator(),
-            Battery()
+            Indicator(),
         ],
     })
 }
