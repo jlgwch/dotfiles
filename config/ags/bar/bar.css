@@ -46,7 +46,7 @@ window.bar {
 
 .caffeine {
     border-radius: 100%;
-    border: none;
+    /* border: none; */
     color: #000000;
 }
 
@@ -60,7 +60,7 @@ window.bar {
 
 .systray button {
     border-radius: 100%;
-    border: none;
+    /* border: none; */
     background-color: @theme_bg_color;
 }
 
