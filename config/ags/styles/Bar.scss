@@ -1,0 +1,147 @@
+@use "sass:color";
+
+$bg: #212223;
+$fg: #f1f1f1;
+$accent: #378DF7;
+$radius: 20px;
+
+window.Bar {
+    border: none;
+    box-shadow: none;
+    border-radius: $radius;
+    background-color: $bg;
+    color: $fg;
+    font-size: 1.1em;
+    font-weight: bold;
+    opacity: 0.8;
+
+    .SysTray button {
+        // all: unset;
+        border-radius: 100%;
+    }
+
+    .Workspaces button {
+        padding-top: 0;
+        padding-bottom: 0;
+        background-color: transparent;
+        border-radius: 100%;
+        // &:hover label {
+        //     color: red;
+        // }
+
+        // &:active label {
+        //     color: pink;
+        // }
+    }
+
+    .Workspaces button:active {
+        &:active label {
+            color: lightsteelblue;
+        }
+    }
+    
+    .Workspaces button:hover {
+        border-bottom: 2px solid $fg;
+    }
+
+    .Workspaces button.focused {
+        border-bottom: 2px solid #ff79c6;
+    }
+
+
+    // button {
+    //     all: unset;
+    //     background-color: transparent;
+
+    //     &:hover label {
+    //         background-color: color.adjust($fg, $alpha: -0.84);
+    //         border-color: color.adjust($accent, $alpha: -0.8);
+    //     }
+
+    //     &:active label {
+    //         background-color: color.adjust($fg, $alpha: -0.8)
+    //     }
+    // }
+
+    // label {
+    //     transition: 200ms;
+    //     padding: 0px;
+    //     margin: 0px;
+    //     border-radius: 100%;
+    //     border: 1pt solid transparent;
+    // }
+
+    // .Workspaces .focused label {
+    //     color: $accent;
+    //     border-color: $accent;
+    // }
+
+    .FocusedClient {
+        color: $accent;
+    }
+
+    .Focused label {
+        color: #ff79c6;
+    }
+
+    .Media .Cover {
+        min-height: 1.2em;
+        min-width: 1.2em;
+        border-radius: 100%;
+        background-position: center;
+        background-size: contain;
+    }
+
+    .Media .MediaLabel {
+        padding: 0;
+        margin: 0;
+    }
+
+    .Battery label {
+        padding-left: 0;
+        margin-left: 0;
+        // padding-right: 6px;
+    }
+
+    .Dashboard button {
+        padding-left: 6px;
+        padding-right: 6px;
+        background-color: #2f2f2f;
+        // background-color: color.adjust($accent, $alpha: -0.8);
+        border-radius: $radius;
+        border: 1px solid $bg;
+    }
+
+    .AudioSlider {
+        * {
+            all: unset;
+        }
+
+        icon {
+            margin-right: .6em;
+        }
+
+        & {
+            margin: 0 1em;
+        }
+
+        trough {
+            background-color: color.adjust($fg, $alpha: -0.8);
+            border-radius: $radius;
+        }
+
+        highlight {
+            background-color: $accent;
+            min-height: .8em;
+            border-radius: $radius;
+        }
+
+        slider {
+            background-color: $fg;
+            border-radius: $radius;
+            min-height: 1em;
+            min-width: 1em;
+            margin: -.2em;
+        }
+    }
+}
