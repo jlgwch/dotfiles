@@ -144,6 +144,7 @@ export function Bar(monitor = 0) {
         name: `bar-${monitor}`, // name has to be unique
         class_name: "bar",
         monitor,
+        layer: "bottom",
         anchor: ["top", "left", "right"],
         exclusivity: "exclusive",
         margins: [6, 6, 0, 6],
