@@ -2,6 +2,7 @@ import { App } from "astal/gtk3"
 import style from "./style.scss"
 import Bar from "./widgets/Bar"
 import Applauncher from "./widgets/Applauncher"
+import Dashboard from "./widgets/Dashboard"
 
 App.start({
     css: style,
@@ -20,5 +21,6 @@ App.start({
             }
         }
         Applauncher()
+        Dashboard()
     },
 })

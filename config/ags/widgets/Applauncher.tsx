@@ -62,22 +62,17 @@ export default function Applauncher() {
         }}>
         <box>
             <eventbox widthRequest={4000} expand onClick={hide} />
-            <box hexpand={false} vertical>
+            <box hexpand={false} orientation={1}>
                 <eventbox expand onClick={hide} />
-                <box widthRequest={500} className="Applauncher" vertical>
+                <box widthRequest={480} className="Applauncher" orientation={1}>
                     <entry
                         placeholderText="Search"
                         text={text()}
                         onChanged={self => text.set(self.text)}
                         onActivate={onEnter}
                     />
-                    <scrollable
-                        border-width={0}
-                        opacity={1}
-                        min-content-height={600}
-                        max-content-height={600}
-                        vscroll>
-                        <box spacing={6} vertical>
+                    <scrollable heightRequest={600} vscroll>
+                        <box spacing={6} orientation={1}>
                             {list.as(list => list.map(app => (
                                 <AppButton app={app} />
                             )))}

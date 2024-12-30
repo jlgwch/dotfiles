@@ -6,26 +6,10 @@ import Mpris from "gi://AstalMpris"
 import Battery from "gi://AstalBattery"
 import Wp from "gi://AstalWp"
 import Network from "gi://AstalNetwork"
-import Tray from "gi://AstalTray"
 
 // Custom
 import Caffeine from "./Caffeine"
-
-function SysTray() {
-    const tray = Tray.get_default()
-
-    return <box spacing={6} className="SysTray">
-        {bind(tray, "items").as(items => items.map(item => (
-            <menubutton
-                tooltipMarkup={bind(item, "tooltipMarkup")}
-                usePopover={false}
-                actionGroup={bind(item, "action-group").as(ag => ["dbusmenu", ag])}
-                menuModel={bind(item, "menu-model")}>
-                <icon g-icon={bind(item, "gicon")} />
-            </menubutton>
-        )))}
-    </box>
-}
+import SysTray from "./SysTray"
 
 function Wifi() {
     const { wifi } = Network.get_default()
@@ -132,11 +116,11 @@ function Time({ format = "%H:%M - %A %e." }) {
 }
 
 function Dashboard() {
-    return <box className="Dashboard">
-        <button onClicked={() => console.log("dashboard clicked")}>
+    return <box>
+        <button className="DashboardButton"
+        onClick={() => {App.toggle_window('dashboard')}}>
             <box spacing={6}>
                 <Wifi />
-                {/* <AudioSlider /> */}
                 <BatteryLevel />
             </box>
         </button>
