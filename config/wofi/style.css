@@ -5,7 +5,7 @@
 @define-color bg2 #494d64;
 
 * {
-   font-family: 'Source Han Sans CN Regular';
+   font-family: 'Source Code Pro Semibold';
    font-size: 16px;
 }
 
@@ -13,9 +13,9 @@
 window {
    margin: 0px;
    padding: 10px;
-   /* border: 3px solid @accent; */
-   /* border-radius: 7px; */
-   background-color: @bg;
+   border: 2px solid #bd93f9;
+   border-radius: 12px;
+   background-color: #28a36;
    animation: slideIn 0.5s ease-in-out both;
 }
 
@@ -32,11 +32,12 @@ window {
 
 /* Inner Box */
 #inner-box {
-   margin: 5px;
-   padding: 5px;
    border: none;
-   background-color: @bg;
+   border-radius: 0px;
+   background-color: #00000000;
    animation: fadeIn 0.5s ease-in-out both;
+   padding-right: 20px;
+   padding-left: 20px;
 }
 
 /* Fade In */
@@ -52,42 +53,92 @@ window {
 
 /* Outer Box */
 #outer-box {
-   margin: 5px;
-   padding: 10px;
+   margin: 2px;
+   padding: 0px;
    border: none;
    background-color: @bg;
+   border-radius: 12px;
 }
 
 /* Scroll */
 #scroll {
-   margin: 0px;
    padding: 10px;
    border: none;
+   margin-bottom: 20px;
+   /* background-color: @bg; */
 }
+
+/* 定义滚动条 */
+scrollbar {
+   all: unset;
+   width: 1px;
+   padding: 0;
+   /* padding: 20; */
+   border-radius: 6px;
+   background-color: #d3d3d300; /* 滚动条轨道背景 */
+}
+
+/* 鼠标悬停时，滚动条变宽 */
+scrollbar:hover {
+   width: 1px; /* 滚动条在 hover 时的宽度 */
+}
+
+/* 滚动条滑块 */
+scrollbar slider {
+   /* all: unset; */
+   width: 3px;
+   border-radius: 6px;
+   background-color: #888;
+}
+
+/* 滚动条滑块悬停状态 */
+scrollbar slider:hover {
+   width: 3px;
+   background-color: #555;
+}
+
+/* 滚动条的箭头 */
+scrollbar button {
+   background-color: transparent;
+}
+
 
 /* Input */
 #input {
-   margin: 5px;
-   padding: 10px;
+   margin-top: 30px;
+   margin-bottom: 10px;
+   margin-left: 30px;
+   margin-right: 30px;
+   padding: 6px;
    border: none;
-   color: @accent;
-   background-color: @bg2;
-   animation: fadeIn 0.5s ease-in-out both;
+   color: #ff79c6;
+   border: 1px solid #A8A6B9;
+   border-radius: 6px;
+   background-color: #44475a;
+   animation: fadeIn 0.5s ease-in-out both;  
 }
 
 /* Text */
 #text {
-   margin: 5px;
-   padding: 10px;
+   margin-left: 10px;
    border: none;
    color: @txt;
    animation: fadeIn 0.5s ease-in-out both;
+   text-align: center;
 }
 
+/* #img {
+
+} */
+
 /* Selected Entry */
+#entry {
+   padding-left: 10px;
+}
+
 #entry:selected {
-   background-color: @accent;
-   border-radius: 10px;
+   background-color: #44475a;
+   border-radius: 6px;
 }
 
 #entry:selected #text {
