@@ -55,7 +55,7 @@ export default function Dashboard() {
             if (event.get_keyval()[1] === Gdk.KEY_Escape)
                 self.hide()
         }}>
-        <box widthRequest={300} spacing={15} orientation={1} vexpand={true} className="content">
+        <box widthRequest={300} spacing={20} orientation={1} expand className="content">
             {/* <label label="No match found" />
             <label label="No match found" />
             <label label="No match found" />
