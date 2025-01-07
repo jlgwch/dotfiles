@@ -50,7 +50,7 @@ export default function Applauncher() {
 
     return <window
         name="launcher"
-        anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM}
+        // anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM}
         exclusivity={Astal.Exclusivity.IGNORE}
         keymode={Astal.Keymode.ON_DEMAND}
         application={App}
@@ -60,36 +60,28 @@ export default function Applauncher() {
             if (event.get_keyval()[1] === Gdk.KEY_Escape)
                 self.hide()
         }}>
-        <box>
-            <eventbox widthRequest={4000} expand onClick={hide} />
-            <box hexpand={false} orientation={1}>
-                <eventbox expand onClick={hide} />
-                <box widthRequest={480} className="Applauncher" orientation={1}>
-                    <entry
-                        placeholderText="Search"
-                        text={text()}
-                        onChanged={self => text.set(self.text)}
-                        onActivate={onEnter}
-                    />
-                    <scrollable heightRequest={600} vscroll>
-                        <box spacing={6} orientation={1}>
-                            {list.as(list => list.map(app => (
-                                <AppButton app={app} />
-                            )))}
-                        </box>
-                        {/* <box
-                            halign={CENTER}
-                            className="not-found"
-                            vertical
-                            visible={list.as(l => l.length === 0)}>
-                            <icon icon="system-search-symbolic" />
-                            <label label="No match found" />
-                        </box> */}
-                    </scrollable>
+        <box widthRequest={480} heightRequest={600} className="Applauncher" orientation={1}>
+            <entry
+                placeholderText="Search"
+                text={text()}
+                onChanged={self => text.set(self.text)}
+                onActivate={onEnter}
+            />
+            <scrollable heightRequest={600} vscroll>
+                <box spacing={6} orientation={1}>
+                    {list.as(list => list.map(app => (
+                        <AppButton app={app} />
+                    )))}
                 </box>
-                <eventbox expand onClick={hide} />
-            </box>
-            <eventbox widthRequest={4000} expand onClick={hide} />
+                {/* <box
+                    halign={CENTER}
+                    className="not-found"
+                    vertical
+                    visible={list.as(l => l.length === 0)}>
+                    <icon icon="system-search-symbolic" />
+                    <label label="No match found" />
+                </box> */}
+            </scrollable>
         </box>
     </window>
 }
