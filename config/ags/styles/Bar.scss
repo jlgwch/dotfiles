@@ -80,8 +80,8 @@ window.Bar {
     }
 
     .Media .Cover {
-        min-height: 1.2em;
-        min-width: 1.2em;
+        min-height: 1.15em;
+        min-width: 1.15em;
         border-radius: 100%;
         background-position: center;
         background-size: contain;
@@ -90,6 +90,14 @@ window.Bar {
     .Media .MediaLabel {
         padding: 0;
         margin: 0;
+    }
+
+    .Time {
+        padding-left: 8px;
+        padding-right: 8px;
+        border: 1px solid $bg;
+        border-radius: 20px;
+        background-color: #2f2f2f;
     }
 
     .Battery label {

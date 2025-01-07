@@ -6,10 +6,48 @@ import Mpris from "gi://AstalMpris"
 import Battery from "gi://AstalBattery"
 import Wp from "gi://AstalWp"
 import Network from "gi://AstalNetwork"
+import Tray from "gi://AstalTray"
 
 // Custom
 import Caffeine from "./Caffeine"
 import SysTray from "./SysTray"
+
+// function SysTray() {
+//     const tray = Tray.get_default()
+
+//     return <box spacing={8} className="SysTray">
+//         {bind(tray, "items").as(items => items.map(item => {
+//             if (item.iconThemePath)
+//                 App.add_icons(item.iconThemePath)
+
+//             // const menu = item.create_menu()
+//             return <button
+//                 tooltip-markup={bind(item, "tooltipMarkup")}
+//                 // onDestroy={() => menu?.destroy()}
+//                 onClickRelease={self => {
+//                     // menu?.popup_at_widget(self, Gdk.Gravity.SOUTH, Gdk.Gravity.NORTH, null)
+//                 }}>
+//                 <icon g-icon={bind(item, "gicon")} />
+//             </button>
+//         }))}
+//     </box>
+// }
+
+// function SysTray() {
+//     const tray = Tray.get_default()
+
+//     return <box spacing={6} className="SysTray">
+//         {bind(tray, "items").as(items => items.map(item => (
+//             <menubutton
+//                 tooltipMarkup={bind(item, "tooltipMarkup")}
+//                 usePopover={false}
+//                 actionGroup={bind(item, "action-group").as(ag => ["dbusmenu", ag])}
+//                 menuModel={bind(item, "menu-model")}>
+//                 <icon gicon={bind(item, "gicon")} />
+//             </menubutton>
+//         )))}
+//     </box>
+// }
 
 function Wifi() {
     const { wifi } = Network.get_default()
@@ -51,9 +89,10 @@ function Media() {
 
     return <box className="Media">
         {bind(mpris, "players").as(ps => ps[0] ? (
-            <box spacing={2}>
+            <box spacing={4}>
                 <box
                     className="Cover"
+                    margin-top={2}
                     valign={Gtk.Align.CENTER}
                     css={bind(ps[0], "coverArt").as(cover =>
                         `background-image: url('${cover}');`
@@ -61,13 +100,15 @@ function Media() {
                 />
                 <label
                     className="MediaLabel"
+                    max-width-chars={12}
+                    truncate={true}
                     label={bind(ps[0], "title").as(() =>
                         `${ps[0].title} - ${ps[0].artist}`
                     )}
                 />
             </box>
         ) : (
-            "Nothing Playing"
+            ""
         ))}
     </box>
 }
@@ -104,7 +145,7 @@ function FocusedClient() {
     </box>
 }
 
-function Time({ format = "%H:%M - %A %e." }) {
+function Time({ format = "%Y-%m-%d  %H:%M  %A" }) {
     const time = Variable<string>("").poll(1000, () =>
         GLib.DateTime.new_now_local().format(format)!)
 
@@ -137,6 +178,7 @@ export default function Bar(monitor: Gdk.Monitor) {
         margin-left={8}
         margin-right={8}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
+        layer={Astal.Layer.BOTTOM}
         anchor={TOP | LEFT | RIGHT}>
         <centerbox>
             <box spacing={4} hexpand halign={Gtk.Align.START}>
@@ -144,10 +186,10 @@ export default function Bar(monitor: Gdk.Monitor) {
                 <FocusedClient />
             </box>
             <box>
+                {/* <Media /> */}
                 <Time />
             </box>
             <box spacing={6} hexpand halign={Gtk.Align.END} >
-                {/* <Media /> */}
                 <SysTray />
                 <Caffeine />
                 <Dashboard />
