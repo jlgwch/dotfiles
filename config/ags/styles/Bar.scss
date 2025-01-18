@@ -6,7 +6,7 @@ $accent: #378DF7;
 $radius: 20px;
 
 window.Bar {
-    border: none;
+    border: 1px solid #ff79c6ff;
     box-shadow: none;
     border-radius: $radius;
     background-color: $bg;
@@ -93,11 +93,13 @@ window.Bar {
     }
 
     .Time {
+        padding-top: 0;
+        padding-bottom: 0;
         padding-left: 8px;
         padding-right: 8px;
-        border: 1px solid $bg;
-        border-radius: 20px;
-        background-color: #2f2f2f;
+        // border: none;
+        border-radius: $radius;
+        background-color: transparent;
     }
 
     .Battery label {
@@ -107,12 +109,11 @@ window.Bar {
     }
 
     .DashboardButton {
-        padding-left: 6px;
-        padding-right: 6px;
-        background-color: #2f2f2f;
-        // background-color: color.adjust($accent, $alpha: -0.8);
+        padding-top: 0;
+        padding-bottom: 0;
+        background-color: transparent;
         border-radius: $radius;
-        border: 1px solid $bg;
+        // border: 1px solid $bg;
     }
 
     .AudioSlider {

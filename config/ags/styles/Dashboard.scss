@@ -3,75 +3,43 @@
 $bg: #1e1f29;
 $fg: #f8f8f2;
 $accent: #378DF7;
-$radius: 8px;
+$radius: 12px;
 
-window#dashboard {
-    all: unset;
-
-    box.content {
-        border: none;
-        box-shadow: none;
-        background-color: $bg;
-        border-radius: $radius;
-        color: $fg;
-        font-size: 1em;
-        font-weight: bold;
-        opacity: 0.95;
-        padding: 10px;
-    }
-
-    box.box1 {
-        background-color: red;
-    }
-
-    box.box2 {
-        background-color: green;
-    }
-
-    box.box3 {
-        background-color: lightsteelblue;
-    }
-
-    box.box4 {
-        background-color: pink;
-    }
-
-    box.box5 {
-        background-color: orange;
-    }
-
-    .AudioSlider {
-        * {
-            all: unset;
-        }
-
-        icon {
-            margin-right: .8em;
-        }
-
-        & {
-            margin: 0 1em;
-        }
-
-        trough {
-            background-color: color.adjust($fg, $alpha: -0.8);
-            border-radius: $radius;
-        }
-
-        highlight {
-            background-color: $accent;
-            min-height: .8em;
-            border-radius: $radius;
-        }
-
-        slider {
-            background-color: $fg;
-            border-radius: 12;
-            min-height: 1em;
-            min-width: 1em;
-            margin: -.7em;
-        }
-    }
-
-
+.Dashboard {
+    border: 1pt solid #ff79c6ff;
+    // box-shadow: none;
+    background-color: $bg;
+    border-radius: $radius;
+    // color: $fg;
+    // font-size: 1em;
+    // font-weight: bold;
+    opacity: 0.9;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    // padding: 8px;
 }
+
+.AudioSlider {
+
+    trough {
+        background-color: color.adjust($fg, $alpha: -0.8);
+        border-radius: $radius;
+    }
+
+    highlight {
+        background-color: $accent;
+        min-height: .4em;
+        border-radius: $radius;
+    }
+
+    slider {
+        background-color: #00000000;
+        border-radius: $radius;
+        min-height: 0.3em;
+        min-width: 0.3em;
+        // margin: -.6em;
+    }
+}
+

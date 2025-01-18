@@ -8,54 +8,40 @@
 $fg-color: #{"@theme_fg_color"};
 $bg-color: #{"@theme_bg_color"};
 
-window#launcher {
-    all: unset;
+.Applauncher {
+    background-color: $bg-color;
+    
+    border-radius: 12px;
+    // margin: 1rem;
+    padding: .8rem;
+    box-shadow: 2px 3px 8px 0 gtkalpha(black, .4);
+    border: 2px solid #ff79c6ff;
+    opacity: 1;
+}
 
-    box.Applauncher {
-        background-color: $bg-color;
-        border-radius: 11px;
-        margin: 1rem;
-        padding: .8rem;
-        box-shadow: 2px 3px 8px 0 gtkalpha(black, .4);
+.Applauncher button {
+    min-width: 0;
+    min-height: 0;
+    padding: .5rem;
+    border-radius: 6px;
+    // padding-top: 0;
+    // padding-bottom: 0;
 
-        entry {
-            margin-bottom: .8rem;
-        }
-
-        button {
-            min-width: 0;
-            min-height: 0;
-            padding: .5rem;
-            // padding-top: 0;
-            // padding-bottom: 0;
-
-            icon {
-                font-size: 1.8em;
-                margin-right: .3rem;
-            }
-
-            label.name {
-                font-weight: bold;
-                font-size: 1.2em
-            }
-
-            label.description {
-                color: gtkalpha($fg-color, .8);
-            }
-        }
-
-        box.not-found {
-            padding: 1rem;
-
-            icon {
-                font-size: 6em;
-                color: gtkalpha($fg-color, .7);
-            }
-
-            label {
-                color: gtkalpha($fg-color, .9);
-                font-size: 1.2em;
-            }
-        }
+    icon {
+        font-size: 1.8em;
+        margin-right: .3rem;
     }
+
+    label.name {
+        font-weight: bold;
+        font-size: 1.2em
+    }
+
+    label.description {
+        color: gtkalpha($fg-color, .8);
+    }
+}
+
+.Applauncher entry {
+    margin-bottom: .8rem;
 }

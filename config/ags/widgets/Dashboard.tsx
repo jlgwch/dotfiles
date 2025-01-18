@@ -12,7 +12,8 @@ function SpeakerSlider() {
     const speaker = Wp.get_default()?.audio.defaultSpeaker!
 
     return <box className="AudioSlider" css="min-width: 140px">
-        <icon icon={bind(speaker, "volumeIcon")} />
+        {/* <icon halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER} icon={bind(speaker, "volumeIcon")} /> */}
+        <icon halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER} icon={"speaker"} />
         <slider
             hexpand
             onDragged={({ value }) => speaker.volume = value}
@@ -25,7 +26,8 @@ function MicrophoneSlider() {
     const microphone = Wp.get_default()?.audio.defaultMicrophone!
 
     return <box className="AudioSlider" css="min-width: 140px">
-        <icon icon={"micphone_30"} />
+        {/* <icon halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER} icon={"micphone_30"} /> */}
+        <icon halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER} icon={"micphone_100"} />
         <slider
             hexpand
             onDragged={({ value }) => microphone.volume = value}
@@ -39,32 +41,16 @@ export default function Dashboard() {
     const microphone_slider = new MicrophoneSlider()
     const mpris_players = new MprisPlayers()
     const text = Variable("")
-    // const microphone_slider = new MicrophoneSlider()
 
-    return <window
-        name="dashboard"
-        anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
-        exclusivity={Astal.Exclusivity.IGNORE}
-        keymode={Astal.Keymode.ON_DEMAND}
-        application={App}
-        visible={false}
-        onShow={() => text.set("")}
-        margin-top={50}
-        margin-right={6}
-        onKeyPressEvent={function (self, event: Gdk.Event) {
-            if (event.get_keyval()[1] === Gdk.KEY_Escape)
-                self.hide()
-        }}>
-        <box widthRequest={300} spacing={20} orientation={1} expand className="content">
-            {/* <label label="No match found" />
-            <label label="No match found" />
-            <label label="No match found" />
-            <label label="No match found" />
-            <label label="No match found" /> */}
-            {microphone_slider}
-            {speaker_slider}
-            {/* {mpris_players} */}
-        </box>
-    </window>
+    return <box widthRequest={300} spacing={10} orientation={1} expand className="Dashboard">
+        {/* <label label="No match found" />
+        <label label="No match found" />
+        <label label="No match found" />
+        <label label="No match found" />
+        <label label="No match found" /> */}
+        {microphone_slider}
+        {speaker_slider}
+        {/* {mpris_players} */}
+    </box>
 
 }

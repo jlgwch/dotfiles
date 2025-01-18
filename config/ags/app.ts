@@ -21,6 +21,5 @@ App.start({
             }
         }
         Applauncher()
-        Dashboard()
     },
 })

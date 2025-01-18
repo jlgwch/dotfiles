@@ -11,43 +11,8 @@ import Tray from "gi://AstalTray"
 // Custom
 import Caffeine from "./Caffeine"
 import SysTray from "./SysTray"
-
-// function SysTray() {
-//     const tray = Tray.get_default()
-
-//     return <box spacing={8} className="SysTray">
-//         {bind(tray, "items").as(items => items.map(item => {
-//             if (item.iconThemePath)
-//                 App.add_icons(item.iconThemePath)
-
-//             // const menu = item.create_menu()
-//             return <button
-//                 tooltip-markup={bind(item, "tooltipMarkup")}
-//                 // onDestroy={() => menu?.destroy()}
-//                 onClickRelease={self => {
-//                     // menu?.popup_at_widget(self, Gdk.Gravity.SOUTH, Gdk.Gravity.NORTH, null)
-//                 }}>
-//                 <icon g-icon={bind(item, "gicon")} />
-//             </button>
-//         }))}
-//     </box>
-// }
-
-// function SysTray() {
-//     const tray = Tray.get_default()
-
-//     return <box spacing={6} className="SysTray">
-//         {bind(tray, "items").as(items => items.map(item => (
-//             <menubutton
-//                 tooltipMarkup={bind(item, "tooltipMarkup")}
-//                 usePopover={false}
-//                 actionGroup={bind(item, "action-group").as(ag => ["dbusmenu", ag])}
-//                 menuModel={bind(item, "menu-model")}>
-//                 <icon gicon={bind(item, "gicon")} />
-//             </menubutton>
-//         )))}
-//     </box>
-// }
+import Popup from "./Popup"
+import Dashboard from "./Dashboard"
 
 function Wifi() {
     const { wifi } = Network.get_default()
@@ -149,23 +114,31 @@ function Time({ format = "%Y-%m-%d  %H:%M  %A" }) {
     const time = Variable<string>("").poll(1000, () =>
         GLib.DateTime.new_now_local().format(format)!)
 
-    return <label
-        className="Time"
-        onDestroy={() => time.drop()}
-        label={time()}
-    />
+    return <button className="Time" onDestroy={() => time.drop()}>
+        <box>
+            <label onDestroy={() => time.drop()} label={time()}/>
+        </box>
+    </button>
 }
 
-function Dashboard() {
-    return <box>
-        <button className="DashboardButton"
-        onClick={() => {App.toggle_window('dashboard')}}>
-            <box spacing={6}>
-                <Wifi />
-                <BatteryLevel />
-            </box>
-        </button>
-    </box>
+function Indicator() {
+
+    const popup = (
+        <Popup name="dashboard" marginTop={50} marginRight={8} valign={Gtk.Align.START} halign={Gtk.Align.END}>
+            <Dashboard>
+                
+            </Dashboard>
+        </Popup>
+    )
+    App.add_window(popup)
+
+    return <button className="DashboardButton"
+        onClick={() => {popup.show()}}>
+        <box spacing={6}>
+            <Wifi />
+            <BatteryLevel />
+        </box>
+    </button>
 }
 
 export default function Bar(monitor: Gdk.Monitor) {
@@ -192,7 +165,7 @@ export default function Bar(monitor: Gdk.Monitor) {
             <box spacing={6} hexpand halign={Gtk.Align.END} >
                 <SysTray />
                 <Caffeine />
-                <Dashboard />
+                <Indicator />
             </box>
         </centerbox>
     </window>
