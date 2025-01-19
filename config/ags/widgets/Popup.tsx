@@ -6,6 +6,7 @@ const { TOP, RIGHT, BOTTOM, LEFT } = Astal.WindowAnchor
 type PopupProps = {
     child?: unknown
     name?: ""
+    opacity?: number
     marginBottom?: number
     marginTop?: number
     marginLeft?: number
@@ -17,6 +18,7 @@ type PopupProps = {
 export default function Popup({
     child,
     name,
+    opacity,
     marginBottom,
     marginTop,
     marginLeft,
@@ -27,6 +29,7 @@ export default function Popup({
     return (
         <window
             name={name}
+            opacity={opacity}
             visible={false}
             css="background-color: transparent"
             keymode={Astal.Keymode.EXCLUSIVE}
