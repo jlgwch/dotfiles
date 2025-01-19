@@ -24,19 +24,6 @@ function Wifi() {
     />
 }
 
-// function AudioSlider() {
-//     const speaker = Wp.get_default()?.audio.defaultSpeaker!
-
-//     return <box className="AudioSlider" css="min-width: 140px">
-//         <icon icon={bind(speaker, "volumeIcon")} />
-//         <slider
-//             hexpand
-//             onDragged={({ value }) => speaker.volume = value}
-//             value={bind(speaker, "volume")}
-//         />
-//     </box>
-// }
-
 function BatteryLevel() {
     const bat = Battery.get_default()
 
@@ -124,7 +111,7 @@ function Time({ format = "%Y-%m-%d  %H:%M  %A" }) {
 function Indicator() {
 
     const popup = (
-        <Popup name="dashboard" marginTop={50} marginRight={8} valign={Gtk.Align.START} halign={Gtk.Align.END}>
+        <Popup name="dashboard" opacity={0.8} marginTop={50} marginRight={8} valign={Gtk.Align.START} halign={Gtk.Align.END}>
             <Dashboard>
                 
             </Dashboard>

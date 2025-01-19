@@ -43,11 +43,6 @@ export default function Dashboard() {
     const text = Variable("")
 
     return <box widthRequest={300} spacing={10} orientation={1} expand className="Dashboard">
-        {/* <label label="No match found" />
-        <label label="No match found" />
-        <label label="No match found" />
-        <label label="No match found" />
-        <label label="No match found" /> */}
         {microphone_slider}
         {speaker_slider}
         {/* {mpris_players} */}
