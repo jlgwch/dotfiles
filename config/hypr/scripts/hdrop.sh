@@ -22,7 +22,7 @@ print_help() {
   echo ""
   echo "  -f, --floating"
   echo "          Spawn as a floating window."
-  echo "          Standard is top half, full width, no gap."
+  echo "          Default is top half, full width, no gap."
   echo "          Can be adjusted with -g, -h, -p and -w."
   echo ""
   echo "  -F, --focus"
@@ -70,14 +70,14 @@ print_help() {
   echo "different class names are assigned to each instance. Presently there is"
   echo "support for the following flags in the [COMMAND] string:"
   echo ""
-  echo " -a         ('foot' terminal emulator)"
-  echo " --class    (all other programs)"
+  echo " -a, --app-id ('foot' terminal emulator)"
+  echo " --class      (all other programs)"
   echo ""
   echo "See man page for more information"
 }
 
 print_version() {
-  echo "hdrop version: 0.7.6"
+  echo "hdrop version: 0.7.8"
 }
 
 notify() {
@@ -91,13 +91,13 @@ notify_low() {
 }
 
 partial_match() {
-  CLASS=$(hyprctl clients -j | jq -r ".[] | select((.class |match(\"$1\";\"i\"))) | .class" | head -1)
+  CLASS=$(hyprctl -j clients | jq -r ".[] | select((.class |match(\"$1\";\"i\"))) | .class" | head -n -1)
 }
 
 wait_online() {
   wait_online=0
   while [[ $wait_online -lt 200 ]]; do
-    ping -qc 1 github.com && break
+    ping -qc 1 github.com && sleep 0.1 && ping -qc 1 github.com && break
     sleep 0.1
     $wait_online++
   done
@@ -196,7 +196,7 @@ fi
 CLASS="$1"
 COMMAND="$1"
 COMMANDLINE="${*:1}"
-ACTIVE_WORKSPACE="$(hyprctl activeworkspace -j | jq -r .id)" || notify "hdrop: Error executing dependencies 'hyprctl' or 'jq'" "Check terminal output of 'hdrop $COMMANDLINE'"
+ACTIVE_WORKSPACE="$(hyprctl -j activeworkspace | jq -r .name)" || notify "hdrop: Error executing dependencies 'hyprctl' or 'jq'" "Check terminal output of 'hdrop $COMMANDLINE'"
 
 case "$1" in
 epiphany)
@@ -234,7 +234,7 @@ if [[ -n $OPT ]]; then
   esac
 fi
 
-if $INSENSITIVE && [[ -n $(hyprctl clients -j | jq -r ".[] | select((.class |test(\"$CLASS\";\"i\")))") ]]; then
+if $INSENSITIVE && [[ -n $(hyprctl -j clients | jq -r ".[] | select((.class |test(\"$CLASS\";\"i\")))") ]]; then
   if $VERBOSE; then notify_low "hdrop: --insensitive -> Insensitive (partial) match of class '$CLASS' successful"; fi
   partial_match "$CLASS" || notify "hdrop: Error assigning case insensitive (partial) match to CLASS"
   if $VERBOSE; then notify_low "hdrop: --insensitive -> Using class '$CLASS' after insensitive (partial) matching"; fi
@@ -247,9 +247,9 @@ fi
 
 if $FLOATING; then
   if [[ $GAP -ne 0 ]]; then
-    ACTIVE_MONITOR_WIDTH=$(($(hyprctl monitors -j | jq -r ".[] | select(.focused==true) | .width") * 100))
-    ACTIVE_MONITOR_HEIGHT=$(($(hyprctl monitors -j | jq -r ".[] | select(.focused==true) | .height") * 100))
-    ACTIVE_MONITOR_SCALE=$(awk "BEGIN {printf $(hyprctl monitors -j | jq -r ".[] | select(.focused==true) | .scale") * 100}")
+    ACTIVE_MONITOR_WIDTH=$(($(hyprctl -j monitors | jq -r ".[] | select(.focused==true) | .width") * 100))
+    ACTIVE_MONITOR_HEIGHT=$(($(hyprctl -j monitors | jq -r ".[] | select(.focused==true) | .height") * 100))
+    ACTIVE_MONITOR_SCALE=$(awk "BEGIN {printf $(hyprctl -j monitors | jq -r ".[] | select(.focused==true) | .scale") * 100}")
 
     ACTIVE_MONITOR_WIDTH_SCALED=$(($ACTIVE_MONITOR_WIDTH / $ACTIVE_MONITOR_SCALE))
     ACTIVE_MONITOR_HEIGHT_SCALED=$(($ACTIVE_MONITOR_HEIGHT / $ACTIVE_MONITOR_SCALE))
@@ -285,18 +285,22 @@ if $FLOATING; then
     ;;
   esac
 
-  hyprctl --batch "keyword windowrule float,^$CLASS$ ; keyword windowrule move $POSITION_xy,^$CLASS$"
+  if [[ $(hyprctl -j version | jq -r .version | tr '.' '\n' | head -n 2 | tail -n 1) -ge 48 ]]; then
+    hyprctl --batch "keyword windowrule float,class:^$CLASS$ ; keyword windowrule move $POSITION_xy,class:^$CLASS$"
+  else
+    hyprctl --batch "keyword windowrule float,^$CLASS$ ; keyword windowrule move $POSITION_xy,^$CLASS$"
+  fi
 fi
 
-if [[ -n $(hyprctl clients -j | jq -r ".[] | select(.class==\"$CLASS\" and .workspace.id!=$ACTIVE_WORKSPACE)") ]]; then
+if [[ -n $(hyprctl -j clients | jq -r ".[] | select(.class==\"$CLASS\" and .workspace.name!=\"$ACTIVE_WORKSPACE\")") ]]; then
   if [[ $FOCUS == false ]]; then
     # shellcheck disable=SC2140 # erroneous warning
-    hyprctl dispatch -- movetoworkspacesilent "$ACTIVE_WORKSPACE","class:^$CLASS$" || notify "hdrop: Error moving '$COMMANDLINE' to current workspace"
+    hyprctl dispatch -- movetoworkspacesilent "name:$ACTIVE_WORKSPACE","class:^$CLASS$" || notify "hdrop: Error moving '$COMMANDLINE' to current workspace"
     if [[ $FLOATING ]]; then hyprctl dispatch -- resizewindowpixel exact "$WIDTH_xy% $HEIGHT_xy%", "class:^$CLASS$" || notify "hdrop: Error resizing window for active monitor"; fi
     if $VERBOSE; then notify_low "hdrop: Matched class '$CLASS' on another workspace and moved it to current workspace"; fi
   fi
   hyprctl dispatch -- focuswindow "class:^$CLASS$" || notify "hdrop: Error focusing '$COMMANDLINE' on current workspace"
-elif [[ -n $(hyprctl clients -j | jq -r ".[] | select(.class==\"$CLASS\" and .workspace.id==$ACTIVE_WORKSPACE)") ]]; then
+elif [[ -n $(hyprctl -j clients | jq -r ".[] | select(.class==\"$CLASS\" and .workspace.name==\"$ACTIVE_WORKSPACE\")") ]]; then
   if [[ $FOCUS == false ]]; then
     hyprctl dispatch -- movetoworkspacesilent special:hdrop,"class:^$CLASS$" || notify "hdrop: Error moving '$COMMANDLINE' to workspace 'special:hdrop'"
     if [[ $FLOATING ]]; then hyprctl dispatch -- resizewindowpixel exact "$WIDTH_xy% $HEIGHT_xy%", "class:^$CLASS$" || notify "hdrop: Error resizing window for active monitor"; fi
@@ -314,5 +318,5 @@ else
     # shellcheck disable=SC2086 # when quoting COMMANDLINE the execution of the command fails
     $BACKGROUND $COMMANDLINE || notify "hdrop: Error executing given command" "$COMMANDLINE"
   fi
-  if $VERBOSE; then notify_low "hdrop: No running program matches class '$CLASS'." "Currently active classes are '$(hyprctl clients -j | jq -r '.[] | select(.mapped==true) | .class' | sort | tr '\n' ' ')'. Executed '$COMMANDLINE' in case it was not running already."; fi
+  if $VERBOSE; then notify_low "hdrop: No running program matches class '$CLASS'." "Currently active classes are '$(hyprctl -j clients | jq -r '.[] | select(.mapped==true) | .class' | sort | tr '\n' ' ')'. Executed '$COMMANDLINE' in case it was not running already."; fi
 fi
