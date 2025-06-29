@@ -1,6 +1,6 @@
-import { App } from "astal/gtk3"
+import { App } from "astal/gtk3/app"
 import { Variable, GLib, bind } from "astal"
-import { Astal, Gtk, Gdk } from "astal/gtk3"
+import { Astal, Gtk, Gdk } from "astal/gtk3/app"
 import Hyprland from "gi://AstalHyprland"
 import Mpris from "gi://AstalMpris"
 import Battery from "gi://AstalBattery"
@@ -13,15 +13,26 @@ import Caffeine from "./Caffeine"
 import SysTray from "./SysTray"
 import Popup from "./Popup"
 import Dashboard from "./Dashboard"
+import Recordscreen from "./Recordscreen"
 
 function Wifi() {
-    const { wifi } = Network.get_default()
+    const network = Network.get_default()
+    const wifi = bind(network, "wifi")
+    const wired = bind(network, "wired")
 
-    return <icon
-        tooltipText={bind(wifi, "ssid").as(String)}
-        className="Wifi"
-        icon={bind(wifi, "iconName")}
-    />
+    // console.log(Network.internet_from_device())
+    // console.log(Network.device_state_to_string())
+    // console.log(network.get_primary())
+
+    return <box visible={wifi.as(Boolean)}>
+        {wifi.as(wifi => wifi && (
+            <icon
+                tooltipText={bind(wifi, "ssid").as(String)}
+                className="Wifi"
+                icon={bind(wifi, "iconName")}
+            />
+        ))}
+    </box>
 }
 
 function BatteryLevel() {
@@ -31,7 +42,7 @@ function BatteryLevel() {
         visible={bind(bat, "isPresent")}>
         <icon icon={bind(bat, "batteryIconName")} />
         <label label={bind(bat, "percentage").as(p =>
-            `${Math.floor(p * 100)}%`
+            ` ${Math.floor(p * 100)}%`
         )} />
     </box>
 }
@@ -103,7 +114,7 @@ function Time({ format = "%Y-%m-%d  %H:%M  %A" }) {
 
     return <button className="Time" onDestroy={() => time.drop()}>
         <box>
-            <label onDestroy={() => time.drop()} label={time()}/>
+            <label onDestroy={() => time.drop()} label={time()} />
         </box>
     </button>
 }
@@ -111,16 +122,16 @@ function Time({ format = "%Y-%m-%d  %H:%M  %A" }) {
 function Indicator() {
 
     const popup = (
-        <Popup name="dashboard" opacity={0.8} marginTop={50} marginRight={8} valign={Gtk.Align.START} halign={Gtk.Align.END}>
+        <Popup name="dashboard" opacity={1.0} marginTop={50} marginRight={6} valign={Gtk.Align.START} halign={Gtk.Align.END}>
             <Dashboard>
-                
+
             </Dashboard>
         </Popup>
     )
     App.add_window(popup)
 
     return <button className="DashboardButton"
-        onClick={() => {popup.show()}}>
+        onClick={() => { popup.show() }}>
         <box spacing={6}>
             <Wifi />
             <BatteryLevel />
@@ -134,9 +145,9 @@ export default function Bar(monitor: Gdk.Monitor) {
     return <window
         className="Bar"
         gdkmonitor={monitor}
-        margin-top={8}
-        margin-left={8}
-        margin-right={8}
+        margin-top={6}
+        margin-left={6}
+        margin-right={6}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
         layer={Astal.Layer.BOTTOM}
         anchor={TOP | LEFT | RIGHT}>
@@ -151,6 +162,7 @@ export default function Bar(monitor: Gdk.Monitor) {
             </box>
             <box spacing={6} hexpand halign={Gtk.Align.END} >
                 <SysTray />
+                {/* <Recordscreen /> */}
                 <Caffeine />
                 <Indicator />
             </box>

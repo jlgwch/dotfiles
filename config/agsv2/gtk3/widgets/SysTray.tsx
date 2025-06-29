@@ -1,4 +1,4 @@
-import { Gdk, Widget, Gtk, App } from "astal/gtk3";
+import { Gdk, Widget, Gtk, App } from "astal/gtk3//app";
 import { bind, Variable, timeout, Gio, GLib, AstalIO } from "astal";
 import Tray from "gi://AstalTray";
 import TrayItem from "gi://AstalTray";
@@ -10,20 +10,20 @@ function createMenu(menuModel: Gio.MenuModel, actionGroup: Gio.ActionGroup): Gtk
 }
 
 function SysTrayItem(trayItem: TrayItem) {
-    let menu: Gtk.Menu;
-    const entryBinding = Variable.derive(
-        [bind(trayItem, 'menuModel'), bind(trayItem, 'actionGroup')],
-        (menuModel, actionGroup) => {
-            if (!menuModel) {
-                return console.error(`Menu Model not found for ${trayItem.id}`);
-            }
-            if (!actionGroup) {
-                return console.error(`Action Group not found for ${trayItem.id}`);
-            }
+	let menu: Gtk.Menu;
+	const entryBinding = Variable.derive(
+		[bind(trayItem, 'menuModel'), bind(trayItem, 'actionGroup')],
+		(menuModel, actionGroup) => {
+			if (!menuModel) {
+				return console.error(`Menu Model not found for ${trayItem.id}`);
+			}
+			if (!actionGroup) {
+				return console.error(`Action Group not found for ${trayItem.id}`);
+			}
 
-            menu = createMenu(menuModel, actionGroup);
-        }
-    )
+			menu = createMenu(menuModel, actionGroup);
+		}
+	)
 
 	const button = (
 		<button
@@ -62,11 +62,11 @@ function SysTrayItem(trayItem: TrayItem) {
 }
 
 export default function SysTray() {
-    const tray = Tray.get_default()
+	const tray = Tray.get_default()
 
-    return <box spacing={6} className="SysTray">
-        {bind(tray, "items").as(items => items.map(item => (
-            SysTrayItem(item)
-        )))}
-    </box>
+	return <box spacing={6} className="SysTray">
+		{bind(tray, "items").as(items => items.map(item => (
+			SysTrayItem(item)
+		)))}
+	</box>
 }

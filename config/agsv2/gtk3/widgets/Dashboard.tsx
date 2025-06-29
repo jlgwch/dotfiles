@@ -1,8 +1,8 @@
 import Apps from "gi://AstalApps"
-import { App, Astal, Gdk, Gtk } from "astal/gtk3"
+import { App, Astal, Gdk, Gtk } from "astal/gtk3/app"
 import { Variable, bind } from "astal"
 import Wp from "gi://AstalWp"
-import MprisPlayers from "./MediaPlayer"
+// import MprisPlayers from "./MediaPlayer"
 
 function hide() {
     App.get_window("dashboard")!.hide()
@@ -39,7 +39,7 @@ function MicrophoneSlider() {
 export default function Dashboard() {
     const speaker_slider = new SpeakerSlider()
     const microphone_slider = new MicrophoneSlider()
-    const mpris_players = new MprisPlayers()
+    // const mpris_players = new MprisPlayers()
     const text = Variable("")
 
     return <box widthRequest={300} spacing={10} orientation={1} expand className="Dashboard">

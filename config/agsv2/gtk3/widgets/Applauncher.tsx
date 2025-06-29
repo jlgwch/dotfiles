@@ -1,5 +1,5 @@
 import Apps from "gi://AstalApps"
-import { App, Astal, Gdk, Gtk } from "astal/gtk3"
+import { App, Astal, Gdk, Gtk } from "astal/gtk3/app"
 import { Variable } from "astal"
 
 import Popup from "./Popup"
@@ -51,22 +51,22 @@ export default function Applauncher() {
     }
     const popup = (
         <Popup name="launcher"  >
-        <box widthRequest={480} heightRequest={600} className="Applauncher" orientation={1}>
-        <entry
-            // margin-left={10}
-            // margin-right={10}
-            placeholderText="Search"
-            text={text()}
-            onChanged={self => text.set(self.text)}
-            onActivate={onEnter}
-        />
-        <scrollable heightRequest={600} vscroll>
-            <box spacing={6} orientation={1}>
-                {list.as(list => list.map(app => (
-                    <AppButton app={app} />
-                )))}
-            </box>
-            {/* <box
+            <box widthRequest={480} heightRequest={600} className="Applauncher" orientation={1}>
+                <entry
+                    // margin-left={10}
+                    // margin-right={10}
+                    placeholderText="Search"
+                    text={text()}
+                    onChanged={self => text.set(self.text)}
+                    onActivate={onEnter}
+                />
+                <scrollable heightRequest={600} vscroll>
+                    <box spacing={6} orientation={1}>
+                        {list.as(list => list.map(app => (
+                            <AppButton app={app} />
+                        )))}
+                    </box>
+                    {/* <box
                 halign={CENTER}
                 className="not-found"
                 vertical
@@ -74,8 +74,8 @@ export default function Applauncher() {
                 <icon icon="system-search-symbolic" />
                 <label label="No match found" />
             </box> */}
-        </scrollable>
-    </box>
+                </scrollable>
+            </box>
         </Popup>
     )
 

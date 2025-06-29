@@ -1,4 +1,4 @@
-import { Astal, Gtk, Gdk } from "astal/gtk3"
+import { Astal, Gtk, Gdk } from "astal/gtk3/app"
 import { exec, execAsync } from "astal/process"
 
 export default function Caffeine() {
@@ -18,7 +18,7 @@ export default function Caffeine() {
     }
 
     return <box className="Caffeine">
-        <button onClicked={() => {isCaffeineOn = !isCaffeineOn;updateCaffeineStatus();}}>
+        <button onClicked={() => { isCaffeineOn = !isCaffeineOn; updateCaffeineStatus(); }}>
             {statusIcon}
         </button>
     </box>

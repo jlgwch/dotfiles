@@ -6,14 +6,18 @@ $accent: #378DF7;
 $radius: 20px;
 
 window.Bar {
-    border: 1px solid #ff79c6ff;
+    border: 2px solid #ff79c6ff;
     box-shadow: none;
     border-radius: $radius;
     background-color: $bg;
     color: $fg;
     font-size: 1.1em;
     font-weight: bold;
-    opacity: 0.8;
+    // opacity: 0.8;
+
+    .Workspaces {
+        padding: 2px;
+    }
 
     .Workspaces button {
         padding-top: 0;
@@ -93,6 +97,8 @@ window.Bar {
     }
 
     .Time {
+        margin-top: 2px;
+        margin-bottom: 2px;
         padding-top: 0;
         padding-bottom: 0;
         padding-left: 8px;

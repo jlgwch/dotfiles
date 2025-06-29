@@ -1,4 +1,4 @@
-import { Astal, Gtk } from "astal/gtk3"
+import { Astal, Gtk } from "astal/gtk3/app"
 import Mpris from "gi://AstalMpris"
 import { bind } from "astal"
 

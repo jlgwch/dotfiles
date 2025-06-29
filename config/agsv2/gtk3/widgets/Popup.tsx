@@ -1,5 +1,5 @@
 import { Variable } from "astal"
-import { App, Astal, Gdk, Gtk } from "astal/gtk3"
+import { App, Astal, Gdk, Gtk } from "astal/gtk3/app"
 
 const { TOP, RIGHT, BOTTOM, LEFT } = Astal.WindowAnchor
 
