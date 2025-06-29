@@ -1,0 +1,58 @@
+// https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
+$fg-color: #{"@theme_fg_color"};
+$bg-color: #{"@theme_bg_color"};
+$border-radius: 8px;
+
+window#launcher {
+    background: transparent;
+    color: $fg-color;
+
+    box#launcher-content {
+        background: $bg-color;
+        min-width: 400px;
+        border-radius: 12px;
+        padding: 6px;
+    }
+
+    scrolledwindow#applauncher {
+        background-color: $bg-color;
+        // border: 2px solid $border-color;
+        // border-radius: $border-radius;
+        padding: 0px;
+
+        scrollbar {
+            background-color: transparent;
+            border: 0px solid transparent;
+            border-radius: $border-radius;
+            min-width: 4px;
+            // max-width: 4px;
+            // min-height: 8px;
+
+            slider {
+                background-color: $fg-color;
+                ;
+                border-radius: $border-radius;
+                transition: background-color 200ms ease;
+                min-width: 4px;
+                // max-width: 4px;
+
+                &:hover {
+                    background-color: $fg-color;
+                }
+            }
+
+            button {
+                background-color: transparent;
+                border: none;
+            }
+
+            &.vertical {
+                margin-right: 2px;
+            }
+
+            &.horizontal {
+                margin-bottom: 2px;
+            }
+        }
+    }
+}

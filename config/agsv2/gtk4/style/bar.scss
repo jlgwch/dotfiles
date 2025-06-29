@@ -1,0 +1,106 @@
+// https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
+$fg-color: #{"@theme_fg_color"};
+$bg-color: #{"@theme_bg_color"};
+$theme-color: #ff79c6;
+$radius: 50px;
+
+window.Bar {
+  background: transparent;
+  color: $fg-color;
+  font-weight: bold;
+  border: 2px solid $theme-color;
+  border-radius: $radius;
+  margin-top: 6px;
+  margin-left: 6px;
+  margin-right: 6px;
+
+  box#workspace {
+    margin-left: 1px;
+    // padding: 2px;
+
+    button {
+      // padding-top: 0;
+      // padding-bottom: 0;
+      // background-color: transparent;
+      margin: 2px;
+      border-radius: $radius;
+      border: 1px solid $fg-color;
+
+
+
+      // &:hover {
+      //   background-color: #1d4ed8;
+      // }
+
+      // &:active {
+      //   background-color: #1d4ed8;
+      // }
+
+      // &:focus {
+      //   // background-color: #ff79c6;
+      //   outline: none;
+      //   border: 1px solid #00000000;
+      //   box-shadow: 0 0 0 2px #ff79c6ff;
+      //   // border-bottom: 2px solid #ff79c6;
+      // }
+
+      // &:hover label {
+      //   color: $theme-color;
+      // }
+
+      // &:active label {
+      //     color: pink;
+      // }
+
+      // &:focus label {
+      //   color: $theme-color;
+      // }
+
+      // &:disabled {
+      //   background-color: #9ca3af;
+      //   cursor: not-allowed;
+      //   color: #6b7280;
+      // }
+    }
+
+    button.focused {
+      border: 1px solid #00000000;
+      border-bottom: 2px solid #ff79c6;
+      box-shadow: 0 0 0 2px #ff79c6ff;
+
+      label {
+        color: $theme-color;
+      }
+    }
+  }
+
+  box#focusclient {
+    color: $theme-color;
+    margin-left: 2px;
+  }
+
+  >centerbox {
+    background: $bg-color;
+    border-radius: 10px;
+    margin: 0px;
+  }
+
+  box#start {
+    padding: 2px;
+  }
+
+  box#center {
+    padding: 2px;
+  }
+
+  box#end {
+    padding: 2px;
+  }
+
+  button {
+    border: 1px solid $fg-color;
+    margin: 2px;
+    border-radius: $radius;
+    box-shadow: 0 0 0 0px #00000000;
+  }
+}
