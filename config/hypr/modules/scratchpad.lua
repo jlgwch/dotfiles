@@ -21,23 +21,24 @@ function Scratchpad.register(opts)
     local specialWs = "special:" .. opts.name
     local tag = "scratchpad-" .. opts.name
 
-    hl.on("window.open", function(window)
-        if window.class == opts.class then
-            fit_to_monitor(window, window.monitor or hl.get_active_monitor())
-        end
-    end)
+    local function schedule_fit(window)
+        if window.class ~= opts.class then return end
 
-    hl.on("window.move_to_workspace", function(window, workspace)
-        if window.class ~= opts.class or workspace.special then return end
-
-        -- Allow the move and the client's scale change to finish before resizing.
+        -- Startup, login and scale changes can restore client geometry after the event.
         local selector = "address:" .. window.address
         hl.timer(function()
             local current = hl.get_window(selector)
-            if current and current.workspace and not current.workspace.special then
+            if current and current.class == opts.class and current.workspace and not current.workspace.special then
                 fit_to_monitor(current, current.workspace.monitor)
             end
         end, { timeout = 150, type = "oneshot" })
+    end
+
+    hl.on("window.open", schedule_fit)
+    hl.on("window.class", schedule_fit)
+    hl.on("window.title", schedule_fit)
+    hl.on("window.move_to_workspace", function(window, workspace)
+        if not workspace.special then schedule_fit(window) end
     end)
 
     for _, window in ipairs(hl.get_windows()) do
