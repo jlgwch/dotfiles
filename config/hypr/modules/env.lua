@@ -43,6 +43,7 @@ hl.env("QT_IM_MODULE", "text-input-unstable-v3")
 hl.env("XMODIFIERS", "@im=fcitx")
 hl.env("SDL_IM_MODULE", "fcitx")
 
-
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.env("AQ_DRM_DEVICES", "/dev/dri/card1:/dev/dri/card0")
+
+hl.env("TERMINAL", "alacritty")
