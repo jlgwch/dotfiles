@@ -11,4 +11,6 @@ function M.close_window_switcher(layer)
     end
 end
 
+hl.on("layer.closed", M.close_window_switcher)
+
 return M

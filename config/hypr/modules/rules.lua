@@ -189,19 +189,21 @@ hl.window_rule({
 -- })
 
 -- dropterm
-hl.workspace_rule({
-    workspace = "special:dropterm",
-    on_created_empty = "[float; size monitor_w-16 500; move 8 48] alacritty --class dropterm -e bash -c 'tmux attach-session -t tmux 2>/dev/null || tmux new-session -s tmux'"
-})
+-- hl.window_rule({
+--     match = { class = "^(dropterm)$" },
+--     float = true,
+--     size = { "(monitor_w-16)", 500 },
+--     move = "8 48",
+-- })
 
 -- wechat
-hl.window_rule({
-    match = { class = "^(wechat)$" },
-    float = true,
-    center = true,
-    animation = "fade",
-    size = { "(monitor_w*0.8)", "(monitor_h*0.8)" }
-})
+-- hl.window_rule({
+--     match = { class = "^(wechat)$" },
+--     float = true,
+--     center = true,
+--     animation = "fade",
+--     size = { 1080, 720 }
+-- })
 
 hl.window_rule({
     match = { class = "^(wechat)$", title =  "^(图片和视频)$"},
@@ -229,20 +231,6 @@ hl.window_rule({
     size = { "(monitor_w*0.6)", "(monitor_h*0.8)" }
 })
 
--- google-chrome
-hl.window_rule({
-    name = "bitwarden",
-    match = {
-        -- class = "^(chrome-nngceckbapebfimnlniiiahkandclblb-Default)$", title = "^(Bitwarden)$" 
-        initial_class = "chrome-nngceckbapebfimnlniiiahkandclblb-Default",
-        initial_title = "_crx_nngceckbapebfimnlniiiahkandclblb",
-    },
-    float = true,
-    center = true,
-    animation = "fade",
-    size = { "(monitor_w*0.6)", "(monitor_h*0.6)" }
-})
-
 -- Noctalia Settings
 hl.window_rule({
     match = { class = "dev.noctalia.Noctalia" },
@@ -260,3 +248,11 @@ hl.layer_rule({
     blur = true,
     blur_popups = true,
 })
+
+hl.window_rule({
+    match = { class="io.github.xiaoyifang.goldendict_ng" },
+    float=true,
+    center=true
+})
+
+hl.window_rule({match={class="xpad"}, float=true, size={800, 600}, center=true})

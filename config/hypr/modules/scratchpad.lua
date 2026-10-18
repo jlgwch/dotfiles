@@ -1,181 +1,89 @@
--- ~/.config/hypr/scratchpad.lua
-Scratchpad = {}
-Scratchpad._instances = Scratchpad._instances or {}
-local activeOnMonitor = {}
-local classToName = {}
-local IGNORED_CLASSES = { fcitx5=true, fcitx=true, fcitx5qt=true }
+local Scratchpad = { _instances = {} }
 
-local function clearActiveName(name)
-    for monitorName, activeName in pairs(activeOnMonitor) do
-        if activeName == name then activeOnMonitor[monitorName] = nil end
+local function fit_to_monitor(window, monitor)
+    if not monitor then return end
+
+    if window.fullscreen ~= 0 or window.fullscreen_client ~= 0 then
+        hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 0, client = 0, window = window }))
     end
-end
-
-function Scratchpad.ignore_class(class)
-    IGNORED_CLASSES[class] = true
+    if not window.floating then
+        hl.dispatch(hl.dsp.window.float({ action = "toggle", window = window }))
+    end
+    hl.dispatch(hl.dsp.window.resize({
+        x = monitor.width / monitor.scale - 16,
+        y = monitor.height / monitor.scale - 56,
+        window = window,
+    }))
+    hl.dispatch(hl.dsp.window.move({ x = monitor.x + 8, y = monitor.y + 48, window = window }))
 end
 
 function Scratchpad.register(opts)
-    local name = opts.name
-    local class = opts.class
-    local launchCmd = opts.launch_cmd
-    local key = opts.key
-    local fill = opts.fill ~= false
-    local width = opts.width or 950
-    local height = opts.height or 1030
-    local shownOnMonitor = nil
-    local restoreFocusAddress = nil
+    local specialWs = "special:" .. opts.name
+    local tag = "scratchpad-" .. opts.name
 
-    classToName[class] = name
-
-    local ignoredTitles = {}
-    for _, t in ipairs(opts.ignored_titles or {}) do ignoredTitles[t] = true end
-    local function isIgnored(w) return ignoredTitles[w.title] end
-
-    local specialWs = "special:" .. name
-
-    hl.workspace_rule({ workspace = specialWs, persistent = true })
-    hl.window_rule({
-        name = name.."-float",
-        match = { class = class },
-        float = true,
-        no_anim = true
-    })
-
-    local function findWindow()
-        for _, w in pairs(hl.get_windows()) do
-            if w.class == class and not isIgnored(w) then return w end
+    hl.on("window.open", function(window)
+        if window.class == opts.class then
+            fit_to_monitor(window, window.monitor or hl.get_active_monitor())
         end
-        return nil
-    end
+    end)
 
-    local function getCursorMonitor()
-        local pos = hl.get_cursor_pos()
-        return pos and hl.get_monitor_at({ x = pos.x, y = pos.y }) or hl.get_active_monitor()
-    end
+    hl.on("window.move_to_workspace", function(window, workspace)
+        if window.class ~= opts.class or workspace.special then return end
 
-    local function positionWindow(w)
-        if not w then return end
-        if fill then
-            hl.dispatch(hl.dsp.window.fullscreen_state({internal=1, client=0, window="address:"..w.address}))
-        else
-            hl.dispatch(hl.dsp.window.resize({x=width, y=height, window="address:"..w.address}))
-        end
-    end
-
-    local function rememberFocus(mon, w)
-        shownOnMonitor = mon and mon.name or nil
-        restoreFocusAddress = nil
-
-        local workspace = mon and mon.active_workspace
-        local previous = workspace and workspace.last_window
-        if previous and (not w or previous.address ~= w.address) then
-            restoreFocusAddress = previous.address
-        end
-    end
-
-    local function restoreFocus()
-        local mon = shownOnMonitor and hl.get_monitor(shownOnMonitor) or nil
-        local address = restoreFocusAddress
-        shownOnMonitor = nil
-        restoreFocusAddress = nil
-
-        if address then
-            for _, candidate in pairs(hl.get_windows()) do
-                if candidate.address == address and candidate.mapped then
-                    hl.dispatch(hl.dsp.focus({ window = "address:" .. address }))
-                    return
-                end
+        -- Allow the move and the client's scale change to finish before resizing.
+        local selector = "address:" .. window.address
+        hl.timer(function()
+            local current = hl.get_window(selector)
+            if current and current.workspace and not current.workspace.special then
+                fit_to_monitor(current, current.workspace.monitor)
             end
+        end, { timeout = 150, type = "oneshot" })
+    end)
+
+    for _, window in ipairs(hl.get_windows()) do
+        if window.class == opts.class then
+            fit_to_monitor(window, window.monitor or hl.get_active_monitor())
         end
-
-        if mon then hl.dispatch(hl.dsp.focus({ monitor = mon })) end
-    end
-
-    local function hide(w, shouldRestoreFocus)
-        if not w then return end
-
-        hl.dispatch(hl.dsp.window.move({
-            workspace = specialWs,
-            window = "address:" .. w.address,
-            silent = true
-        }))
-        hl.dispatch(hl.dsp.workspace.toggle_special(name))
-
-        clearActiveName(name)
-        if shouldRestoreFocus then restoreFocus() end
-    end
-
-    local function show(w)
-        if not w then return end
-        local mon = getCursorMonitor()
-        rememberFocus(mon, w)
-
-        hl.dispatch(hl.dsp.window.move({
-            workspace = mon.active_workspace.name,
-            window = "address:" .. w.address
-        }))
-
-        hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
-        positionWindow(w)
-
-        clearActiveName(name)
-        activeOnMonitor[mon.name] = name
     end
 
     local function toggle()
-        local w = findWindow()
-        if not w then
-            rememberFocus(getCursorMonitor())
-            hl.exec_cmd(launchCmd)
+        local workspace = hl.get_active_workspace()
+        if not workspace then return end
+
+        local window
+        for _, candidate in ipairs(hl.get_windows()) do
+            if candidate.class == opts.class then
+                window = candidate
+                break
+            end
+        end
+
+        if not window then
+            hl.exec_cmd(opts.launch_cmd)
             return
         end
 
-        local mon = getCursorMonitor()
-        local isShownHere = (w.workspace.name ~= specialWs) and (activeOnMonitor[mon.name] == name)
-
-        if isShownHere then
-            hide(w, true)
+        hl.dispatch(hl.dsp.window.tag({ tag = "+" .. tag, window = window }))
+        if window.workspace and window.workspace.name == workspace.name then
+            hl.dispatch(hl.dsp.window.move({
+                workspace = specialWs,
+                window = window,
+                follow = false,
+            }))
         else
-            local prev = activeOnMonitor[mon.name]
-            if prev and prev ~= name and Scratchpad._instances[prev] then
-                Scratchpad._instances[prev].hideIfVisible()
-            end
-            show(w)
+            hl.dispatch(hl.dsp.window.move({
+                workspace = workspace,
+                window = "tag:" .. tag,
+                follow = false,
+            }))
+            hl.dispatch(hl.dsp.window.tag({ tag = "-" .. tag, window = window }))
+            hl.dispatch(hl.dsp.focus({ window = window }))
         end
     end
 
-    hl.on("window.open", function(w)
-        if w.class ~= class or isIgnored(w) then return end
-        local mon = getCursorMonitor()
-        positionWindow(w)
-        hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
-        activeOnMonitor[mon.name] = name
-    end)
-
-    hl.bind(key, toggle)
-
-    Scratchpad._instances[name] = {
-        toggle = toggle,
-        find = findWindow,
-        hideIfVisible = function()
-            local w = findWindow()
-            if w and w.workspace.name ~= specialWs then hide(w, false) end
-        end,
-    }
-    return Scratchpad._instances[name]
+    hl.bind(opts.key, toggle)
+    Scratchpad._instances[opts.name] = { toggle = toggle }
+    return Scratchpad._instances[opts.name]
 end
-
--- 全局
-hl.on("window.open", function(w)
-    if classToName[w.class] or IGNORED_CLASSES[w.class] then return end
-    local mon = w.monitor or getCursorMonitor and getCursorMonitor() or hl.get_active_monitor()
-    if not mon then return end
-    local activeName = activeOnMonitor[mon.name]
-    if activeName and Scratchpad._instances[activeName] then
-        Scratchpad._instances[activeName].hideIfVisible()
-        activeOnMonitor[mon.name] = nil
-    end
-end)
 
 return Scratchpad

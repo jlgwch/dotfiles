@@ -18,5 +18,7 @@ M.applauncher = "noctalia msg panel-toggle launcher"
 -- M.lockscreen  = "qs ipc call lockscreen lock"
 M.lockscreen  = "noctalia msg session lock"
 M.controller  = "noctalia msg panel-toggle control-center"
+-- M.clipboard   = "cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
+M.clipboard   = "noctalia msg panel-toggle clipboard"
 
 return M

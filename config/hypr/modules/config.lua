@@ -1,8 +1,3 @@
------------------------
----- LOOK AND FEEL ----
------------------------
-
--- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
     general = {
         gaps_in  = 4,
@@ -61,18 +56,63 @@ hl.config({
     xwayland = {
         force_zero_scaling = true
     },
-})
 
--- See https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/ for more
-hl.config({
     dwindle = {
         preserve_split = true, -- You probably want this
     },
-})
 
--- See https://wiki.hypr.land/Configuring/Layouts/Master-Layout/ for more
-hl.config({
     master = {
         new_status = "master",
     },
+
+    input = {
+        kb_layout  = "us",
+        kb_variant = "",
+        kb_model   = "",
+        kb_options = "",
+        kb_rules   = "",
+
+        follow_mouse = 1,
+        -- float_switch_override_focus = 0,
+        -- mouse_refocus = true,
+
+        sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
+
+        touchpad = {
+            natural_scroll = true,
+        },
+
+        numlock_by_default = true,
+    },
+
+    cursor = {
+        enable_hyprcursor = true,
+        no_warps = false,
+        -- no_hardware_cursors = 1 -- fix cursor lag when moving external mouse
+    },
+
+    ecosystem = {
+        no_donation_nag = true,
+        enforce_permissions = true
+    },
+
+    misc = {
+        force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
+        disable_hyprland_logo   = false,
+        -- Fixing the issue where application windows do not appear on the monitor where the mouse is located upon the first launch of Hyprland
+        initial_workspace_tracking = 0,
+    },
+})
+
+hl.gesture({
+    fingers = 3,
+    direction = "horizontal",
+    action = "workspace"
+})
+
+-- Example per-device config
+-- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Devices/ for more
+hl.device({
+    name        = "epic-mouse-v1",
+    sensitivity = -0.5,
 })

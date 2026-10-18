@@ -5,7 +5,7 @@
 local programs = require("modules.programs") 
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind("SUPER + Q", hl.dsp.exec_cmd(programs.terminal))
+hl.bind("SUPER + T", hl.dsp.exec_cmd(programs.terminal))
 local closeWindowBind = hl.bind("SUPER + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind("SUPER + DELETE", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
@@ -55,11 +55,12 @@ hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
 -- custom
-hl.bind("SUPER + F", hl.dsp.window.fullscreen_state({ internal = 1, client = 0, action = "toggle" }))
+hl.bind("SUPER + F", hl.dsp.window.fullscreen_state({ internal = 2, client = 0, action = "toggle" }))
+hl.bind("SUPER + SHIFT + F", hl.dsp.window.fullscreen_state({ internal = 1, client = 0, action = "toggle" }))
 hl.bind("SUPER + R", hl.dsp.exec_cmd( programs.applauncher ))
 hl.bind("SUPER + L", hl.dsp.exec_cmd( programs.lockscreen ))
 -- hl.bind(mainMod .. "+ P", hl.dsp.exec_cmd( programs.controller ))
-hl.bind("SUPER + space", hl.dsp.exec_cmd( programs.rofi ))
+hl.bind("SUPER + SPACE", hl.dsp.exec_cmd( programs.rofi ))
 hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd( "killall -9 noctalia; noctalia" ))
 -- hl.bind("CTRL + ALT + A", hl.dsp.exec_cmd( "grim -g \"$(slurp -d)\" - | wl-copy" ))
 hl.bind("CTRL + ALT + A", hl.dsp.exec_cmd("QT_QPA_PLATFORM=wayland;flameshot gui"))
@@ -77,4 +78,32 @@ hl.bind('ALT + TAB', switcher.open_window_switcher)
 
 hl.define_submap('window_switcher', function()
     hl.bind('RETURN', hl.dsp.submap 'reset')
+end)
+
+-- clipboard
+hl.bind("SUPER + SHIFT + C", hl.dsp.exec_cmd( programs.clipboard ))
+
+-- toggle dpms
+local dpmsOn = true
+hl.bind("SUPER + Escape", function()
+    dpmsOn = not dpmsOn
+    hl.timer(function()
+        hl.dispatch(hl.dsp.dpms({ action = dpmsOn and "enable" or "disable" }))
+    end, { timeout = 500, type = "oneshot" })
+end)
+
+-- goldendict
+hl.bind("SUPER + SHIFT + T", hl.dsp.exec_cmd("~/.config/hypr/scripts/goldendict-clipboard.sh"))
+
+-- xpad
+hl.bind("SUPER + N", hl.dsp.exec_cmd("xpad -t"))
+
+hl.bind("SUPER + X", function ()
+    if hl.get_workspace("special:minimized") then
+        hl.dispatch(hl.dsp.window.move({ workspace = hl.get_active_workspace(), window = "tag:minimized" }))
+        hl.dispatch(hl.dsp.window.clear_tags({ window = "tag:minimized" }))
+    else
+        hl.dispatch(hl.dsp.window.tag({ tag = "minimized", window = hl.get_active_window() }))
+        hl.dispatch(hl.dsp.window.move({ workspace = "special:minimized", follow = false }))
+    end
 end)
