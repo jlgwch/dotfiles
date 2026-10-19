@@ -1,0 +1,35 @@
+[user]
+	name = xuqiang
+	email = xuqiangup@163.com
+
+[core]
+    editor = vim
+    autocrlf = input
+
+[init]
+    defaultBranch = main
+
+[fetch]
+    prune = true
+
+[push]
+    default = simple
+    autoSetupRemote = true
+
+[pull]
+    ff = only
+
+[diff]
+    tool = vimdiff
+
+[difftool]
+    prompt = false
+
+[merge]
+    tool = vimdiff
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
