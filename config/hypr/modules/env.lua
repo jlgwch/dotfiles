@@ -28,9 +28,9 @@ hl.env("NVD_BACKEND", "direct")
 
 -- Theming Related Variables
 hl.env("GTK_THEME", "Fluent-Dark")
-hl.env("XCURSOR_THEME", "oreo_purple_cursors")
+hl.env("XCURSOR_THEME", "xcursor_oreo_purple_cursors")
 hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_THEME", "oreo_purple_cursors")
+hl.env("HYPRCURSOR_THEME", "hyprcursor_oreo_purple_cursors")
 hl.env("HYPRCURSOR_SIZE", "24")
 
 -- fcitx5
