@@ -1,5 +1,11 @@
 -- macOS 26 风格：原生 spring 弹簧曲线
 
+hl.config({
+    animations = {
+        enabled = true,
+    },
+})
+
 -- Spring curves
 hl.curve("springDefault", { type = "spring", mass = 1,   stiffness = 200,  dampening = 20 })
 hl.curve("springSnappy",  { type = "spring", mass = 0.8, stiffness = 300,  dampening = 22 })

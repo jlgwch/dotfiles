@@ -197,13 +197,13 @@ hl.window_rule({
 -- })
 
 -- wechat
--- hl.window_rule({
---     match = { class = "^(wechat)$" },
---     float = true,
---     center = true,
---     animation = "fade",
---     size = { 1080, 720 }
--- })
+hl.window_rule({
+    match = { class = "^(wechat)$" },
+    float = true,
+    center = true,
+    animation = "fade",
+    size = { 1080, 720 }
+})
 
 hl.window_rule({
     match = { class = "^(wechat)$", title =  "^(图片和视频)$"},
@@ -228,7 +228,16 @@ hl.window_rule({
     float = true,
     center = true,
     animation = "fade",
-    size = { "(monitor_w*0.6)", "(monitor_h*0.8)" }
+    size = { "1080", "720" }
+})
+
+-- sing-box
+hl.window_rule({
+    match = { title = "^(sing-box)$" },
+    float = true,
+    center = true,
+    animation = "fade",
+    size = { "1080", "720" }
 })
 
 -- Noctalia Settings

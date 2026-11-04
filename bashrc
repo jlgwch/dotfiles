@@ -59,25 +59,25 @@ function gen_port() {
 # 清理 SSH known_hosts 指定 IP/域名
 clean_ssh() {
     if [ -z "$1" ]; then
-        echo "用法: cleanssh <IP 或域名>"
+        echo "Usage: clean_ssh <IP address or hostname>"
         return 1
     fi
 
-    local TARGET="$1"
+    local TARGET="*$1*"
     local KNOWN_HOSTS="$HOME/.ssh/known_hosts"
 
-    echo "===> 清理 SSH host key: $TARGET"
+    echo "===> Removing SSH host key: $TARGET"
 
-    # 使用 ssh-keygen 清理
+    # Remove SSH host key using ssh-keygen
     ssh-keygen -R "$TARGET"
 
-    # 额外清理所有残留
+    # Remove any remaining matching entries
     if [ -f "$KNOWN_HOSTS" ]; then
-        grep -v "$TARGET" "$KNOWN_HOSTS" > "${KNOWN_HOSTS}.tmp"
+        grep -vF -- "$1" "$KNOWN_HOSTS" > "${KNOWN_HOSTS}.tmp"
         mv "${KNOWN_HOSTS}.tmp" "$KNOWN_HOSTS"
     fi
 
-    echo "===> 完成，可重新 SSH 连接 $TARGET"
+    echo "===> Done. You can now reconnect via SSH to $1"
 }
 
 alias cleanssh='clean_ssh'

@@ -16,6 +16,10 @@ require("modules.keybindings")
 require("modules.rules")
 require("modules.animations.default")
 require("modules.config")
+require("modules.gestures")
+require("modules.input")
+require("modules.decoration")
+require("modules.misc")
 
 -----------------------
 ----- PERMISSIONS -----
@@ -40,19 +44,19 @@ hl.permission({
 })
 
 -- Super+W：启动微信，或在当前工作区与隐藏工作区之间切换。
-require("modules.scratchpad").register({
-    name = "wechat",
-    class = "wechat",
-    launch_cmd = "wechat",
-    key = "SUPER + W",
-})
+-- require("modules.scratchpad").register({
+--     name = "wechat",
+--     class = "wechat",
+--     launch_cmd = "wechat",
+--     key = "SUPER + W",
+-- })
 
-require("modules.scratchpad").register({
-    name = "sing-box",
-    class = "sing-box",
-    launch_cmd = "sing-box",
-    key = "SUPER + GRAVE",
-})
+-- require("modules.scratchpad").register({
+--     name = "sing-box",
+--     class = "sing-box",
+--     launch_cmd = "sing-box",
+--     key = "SUPER + GRAVE",
+-- })
 
 -- require("modules.scratchpad").register({
 --     name = "google-chrome",

@@ -24,71 +24,23 @@ hl.config({
         no_focus_fallback = true,
     },
 
-    decoration = {
-        rounding       = 10,
-        rounding_power = 2,
-
-        -- Change transparency of focused and unfocused windows
-        active_opacity   = 0.95,
-        inactive_opacity = 0.95,
-        fullscreen_opacity = 1.0,
-
-        shadow = {
-            enabled      = true,
-            range        = 4,
-            render_power = 3,
-            -- color        = 0xee1a1a1a,
-            color = "rgba(1E202966)",
-        },
-
-        blur = {
-            enabled   = true,
-            size      = 3,
-            passes    = 2,
-            vibrancy  = 0.1696,
-        },
-    },
-
-    animations = {
-        enabled = true,
-    },
-
     xwayland = {
         force_zero_scaling = true
     },
 
+    render = {
+        -- send_content_type = false,
+        -- cm_auto_hdr = 0,
+    },
+
     dwindle = {
         preserve_split = true, -- You probably want this
+        smart_split    = false,
+        smart_resizing = true,
     },
 
     master = {
         new_status = "master",
-    },
-
-    input = {
-        kb_layout  = "us",
-        kb_variant = "",
-        kb_model   = "",
-        kb_options = "",
-        kb_rules   = "",
-
-        follow_mouse = 1,
-        -- float_switch_override_focus = 0,
-        -- mouse_refocus = true,
-
-        sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
-
-        touchpad = {
-            natural_scroll = true,
-        },
-
-        numlock_by_default = true,
-    },
-
-    cursor = {
-        enable_hyprcursor = true,
-        no_warps = false,
-        -- no_hardware_cursors = 1 -- fix cursor lag when moving external mouse
     },
 
     ecosystem = {
@@ -96,18 +48,7 @@ hl.config({
         enforce_permissions = true
     },
 
-    misc = {
-        force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo   = false,
-        -- Fixing the issue where application windows do not appear on the monitor where the mouse is located upon the first launch of Hyprland
-        initial_workspace_tracking = 0,
-    },
-})
 
-hl.gesture({
-    fingers = 3,
-    direction = "horizontal",
-    action = "workspace"
 })
 
 -- Example per-device config

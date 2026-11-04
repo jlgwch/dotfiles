@@ -47,3 +47,6 @@ ln -sf $PWD/local/share/fcitx5/themes/Dracula $HOME/.local/share/fcitx5/themes/D
 
 rm -rf $HOME/.local/share/icons
 ln -sf $PWD/local/share/icons $HOME/.local/share/icons
+
+rm -rf $HOME/.local/share/themes
+ln -sf $PWD/local/share/themes $HOME/.local/share/themes

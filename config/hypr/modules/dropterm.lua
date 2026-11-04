@@ -29,7 +29,7 @@ hl.on("window.open", function(window)
     if window.class == "dropterm" then
         fit_dropterm_to_monitor(window, window.monitor or hl.get_active_monitor())
         hl.dispatch(hl.dsp.focus({ window = window }))
-        hl.dispatch(hl.dsp.window.alter_zorder({ mode = "top", window = window }))
+        -- hl.dispatch(hl.dsp.window.alter_zorder({ mode = "top", window = window }))
     end
 end)
 
