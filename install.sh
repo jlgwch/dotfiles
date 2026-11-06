@@ -50,3 +50,6 @@ ln -sf $PWD/local/share/icons $HOME/.local/share/icons
 
 rm -rf $HOME/.local/share/themes
 ln -sf $PWD/local/share/themes $HOME/.local/share/themes
+
+rm -rf $HOME/.local/share/nautilus-python
+ln -sf $PWD/local/share/nautilus-python $HOME/.local/share/nautilus-python

@@ -1,2 +1,3 @@
-/local/share/icons/*
-/local/share/themes/*
+local/share/icons/*
+local/share/themes/*
+__pycache__
