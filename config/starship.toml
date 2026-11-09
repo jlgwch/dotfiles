@@ -1,0 +1,131 @@
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+
+format = """
+${username}\
+[@](green)\
+${hostname}\
+:\
+${directory}\
+${git_branch}\
+${git_commit}\
+${git_status}\
+${character}
+"""
+
+[username]
+show_always = true
+format = '[$user](green)'
+
+[hostname]
+ssh_only = false
+format = '[$hostname](green)'
+
+[directory]
+format = '[$path](blue)'
+truncation_length = 0
+truncate_to_repo = false
+home_symbol = '~'
+
+[character]
+success_symbol = '[\$](white)'
+error_symbol = '[\$](red)'
+vimcmd_symbol = '[\$](white)'
+
+[git_branch]
+symbol = ""
+format = '[ on $symbol $branch ]($style)'
+
+[git_commit]
+tag_symbol = ''
+
+[git_status]
+style = "bg:#FCA17D"
+format = '[$all_status$ahead_behind](#FCA17D)'
+conflicted = '=${count} '
+ahead = '⇡${count} '
+behind = '⇣${count} '
+diverged = '⇕⇡${ahead_count}⇣${behind_count} '
+untracked = '?${count} '
+stashed = '\$${count} '
+modified = '!${count} '
+staged = '+${count} '
+renamed = '»${count} '
+deleted = '✘${count} '
+
+[c]
+symbol = " "
+
+[cpp]
+symbol = " "
+
+[os]
+style = "bg:#9A348E"
+disabled = false # Disabled by default
+# style = 'bold white'
+format = '[ $symbol ]($style)'
+
+[os.symbols]
+AIX = ""
+AlmaLinux = ""
+Alpaquita = ""
+Alpine = ""
+ALTLinux = ""
+Amazon = ""
+Android = ""
+AOSC = ""
+Arch = ""
+Artix = ""
+Bazzite = ""
+Bluefin = ""
+CachyOS = ""
+CentOS = ""
+Debian = ""
+DragonFly = ""
+Elementary = ""
+Emscripten = ""
+EndeavourOS = ""
+Fedora = ""
+FreeBSD = ""
+Garuda = ""
+Gentoo = ""
+HardenedBSD = "󰞌"
+Hurd = ""
+Illumos = ""
+InstantOS = ""
+Ios = "󰀷"
+Kali = ""
+KDENeon = ""
+Linux = ""
+Mabox = ""
+Macos = ""
+Manjaro = ""
+Mariner = ""
+MidnightBSD = ""
+Mint = ""
+NetBSD = ""
+NixOS = ""
+Nobara = ""
+OpenBSD = ""
+OpenCloudOS = ""
+openEuler = ""
+openSUSE = ""
+OracleLinux = "󰺡"
+PikaOS = ""
+Pop = ""
+Raspbian = ""
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Redox = "󰀘"
+RockyLinux = ""
+Solus = ""
+SUSE = ""
+Ubuntu = ""
+Ultramarine = ""
+Unknown = ""
+Uos = ""
+Void = ""
+Windows = "󰍲"
+Zorin = ""
