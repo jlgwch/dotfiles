@@ -27,7 +27,7 @@ hl.env("LIBVA_DRIVER_NAME", "nvidia")
 hl.env("NVD_BACKEND", "direct")
 
 -- Theming Related Variables
-hl.env("GTK_THEME", "Fluent-Dark")
+hl.env("GTK_THEME", "Colloid-Dark-Dracula")
 hl.env("XCURSOR_THEME", "X-Bibata-Modern-Ice")
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_THEME", "H-Bibata-Modern-Ice")

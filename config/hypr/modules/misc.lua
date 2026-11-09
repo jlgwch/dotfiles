@@ -17,7 +17,7 @@ hl.config({
         focus_on_activate            = true,
         session_lock_xray            = true,
 
-        mouse_move_enables_dpms      = true,
-        key_press_enables_dpms       = true,
+        -- mouse_move_enables_dpms      = true,
+        -- key_press_enables_dpms       = true,
     },
 })

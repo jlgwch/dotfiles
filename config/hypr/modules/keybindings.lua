@@ -89,8 +89,8 @@ hl.bind("SUPER + Escape", function()
     dpmsOn = not dpmsOn
     hl.timer(function()
         hl.dispatch(hl.dsp.dpms({ action = dpmsOn and "enable" or "disable" }))
-    end, { timeout = 500, type = "oneshot" })
-end)
+    end, { timeout = 180, type = "oneshot" })
+end, { locked = true } )
 
 -- goldendict
 hl.bind("SUPER + SHIFT + T", hl.dsp.exec_cmd("~/.config/hypr/scripts/goldendict-clipboard.sh"))
