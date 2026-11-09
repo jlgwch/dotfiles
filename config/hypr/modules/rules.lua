@@ -265,3 +265,14 @@ hl.window_rule({
 })
 
 hl.window_rule({match={class="xpad"}, float=true, size={800, 600}, center=true})
+
+
+-- openlogi
+hl.window_rule({
+    match = { class = "^(openlogi-.*-key-osd)$" },
+    float = true,
+    move = { "(monitor_w - window_w) / 2", "monitor_h - window_h - 40" },
+    -- center=true,
+    -- border_size = 0,
+    no_focus = true,
+})
