@@ -11,6 +11,8 @@ items=(
     electron-flags.conf
     qq-flags.conf
     spotify-launcher.conf
+    spotify-flags.conf
+    starship.toml
 )
 
 for item in "${items[@]}"; do
